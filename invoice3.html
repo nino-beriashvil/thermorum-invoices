@@ -7,6 +7,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&display=swap');
 
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -35,7 +40,7 @@
 
         /* Header */
         .invoice-header {
-            padding: 36px 50px;
+            padding: 20px 36px;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -52,7 +57,7 @@
         }
 
         .invoice-title {
-            font-size: 34px;
+            font-size: 28px;
             font-weight: 700;
             color: #9d9fa2;
             letter-spacing: 3px;
@@ -76,12 +81,12 @@
         .divider {
             height: 1px;
             background: linear-gradient(90deg, transparent 0%, #c8cacd 20%, #c8cacd 80%, transparent 100%);
-            margin: 0 50px;
+            margin: 0 36px;
         }
 
         /* Body */
         .invoice-body {
-            padding: 32px 50px;
+            padding: 18px 36px;
         }
 
         /* Parties */
@@ -89,12 +94,12 @@
             display: flex;
             justify-content: space-between;
             gap: 24px;
-            margin-bottom: 28px;
+            margin-bottom: 14px;
         }
 
         .party {
             flex: 1;
-            padding: 20px 24px;
+            padding: 14px 18px;
             background: #f0f0f1;
             border: 1px solid #e2e3e5;
             border-radius: 8px;
@@ -117,7 +122,7 @@
         }
 
         .party-name {
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 700;
             color: #3a3a3a;
             margin-bottom: 10px;
@@ -133,7 +138,7 @@
         .bank-section {
             display: flex;
             gap: 0;
-            margin-bottom: 28px;
+            margin-bottom: 14px;
             border: 1px solid #e2e3e5;
             border-radius: 8px;
             overflow: hidden;
@@ -245,14 +250,14 @@
         }
 
         .items-table tbody tr.empty-row td {
-            height: 48px;
+            height: 32px;
         }
 
         /* Totals */
         .totals-section {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 28px;
+            margin-bottom: 14px;
         }
 
         .totals-box {
@@ -277,7 +282,7 @@
             border-top: 2px solid #fdce36;
             padding-top: 12px;
             margin-top: 4px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: #3a3a3a;
         }
@@ -292,7 +297,7 @@
             border: 1px solid #e2e3e5;
             border-radius: 8px;
             padding: 18px 24px;
-            margin-bottom: 28px;
+            margin-bottom: 14px;
             transition: all 0.3s ease;
             cursor: default;
         }
@@ -361,7 +366,7 @@
         .invoice-footer {
             background: #f0f0f1;
             border-top: 1px solid #e2e3e5;
-            padding: 18px 50px;
+            padding: 14px 36px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -385,6 +390,11 @@
             }
             .invoice-container {
                 box-shadow: none;
+            }
+            .parties, .bank-section, .notes-section, .manager-section,
+            .totals-section, .items-table, .invoice-footer {
+                break-inside: avoid;
+                page-break-inside: avoid;
             }
         }
     </style>
@@ -430,8 +440,8 @@
                     <div class="party-name">შპს თერმორუმი</div>
                     <div class="party-details">
                         ს/ნ: 405134448<br>
-                        +995 322 19 55 50<br>
-                        info@trm.ge
+                        <a href="tel:+995322195550" style="color:inherit;text-decoration:none">+995 322 19 55 50</a><br>
+                        <a href="mailto:info@trm.ge" style="color:inherit;text-decoration:none">info@trm.ge</a>
                     </div>
                 </div>
                 <div class="party">
@@ -439,8 +449,8 @@
                     <div class="party-name">შპს ინსტალი</div>
                     <div class="party-details">
                         ს/ნ:<br>
-                        +995 597 41 55 44<br>
-                        gelazonia76@mail.ru
+                        <a href="tel:+995597415544" style="color:inherit;text-decoration:none">+995 597 41 55 44</a><br>
+                        <a href="mailto:gelazonia76@mail.ru" style="color:inherit;text-decoration:none">gelazonia76@mail.ru</a>
                     </div>
                 </div>
             </div>
@@ -522,7 +532,9 @@
         <div class="invoice-footer">
             <span>შპს თერმორუმი</span>
             <div class="footer-dot"></div>
-            <span>43 ბელიაშვილის ქ., თბილისი 0159, საქართველო</span>
+            <span>თბილისი, ქართულ-ამერიკული მეგობრობის გამზირი #37</span>
+            <div class="footer-dot"></div>
+            <a href="https://trm.ge" target="_blank" style="color:#7a7c7f;text-decoration:none">trm.ge</a>
         </div>
     </div>
 </body>
