@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ინვოისი - თერმორუმი</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Georgian', sans-serif;
+            background: #f0f0f0;
+            padding: 40px;
+            color: #333;
+        }
+
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .invoice-header {
+            background: #fff;
+            padding: 40px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-area svg {
+            height: 42px;
+            width: auto;
+        }
+
+        .invoice-title-area {
+            text-align: right;
+        }
+
+        .invoice-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2c2c2c;
+            letter-spacing: 2px;
+        }
+
+        .invoice-number {
+            font-size: 14px;
+            color: #2c2c2c;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* Yellow accent bar */
+        .accent-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #fdce36 0%, #f5b800 100%);
+        }
+
+        /* Body */
+        .invoice-body {
+            padding: 40px 50px;
+        }
+
+        /* Date row */
+        .date-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 36px;
+        }
+
+        .date-badge {
+            background: #f8f8f8;
+            border-left: 3px solid #fdce36;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #2c2c2c;
+        }
+
+        .date-badge strong {
+            color: #333;
+        }
+
+        /* Parties */
+        .parties {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .party {
+            flex: 1;
+            padding: 24px;
+            border-radius: 8px;
+        }
+
+        .party-seller,
+        .party-buyer {
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            cursor: default;
+        }
+
+        .party-seller:hover,
+        .party-buyer:hover {
+            background: #fdf8e8;
+            border: 1px solid #fde9a0;
+        }
+
+        .party-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #2c2c2c;
+            margin-bottom: 12px;
+        }
+
+        .party-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c2c2c;
+            margin-bottom: 12px;
+        }
+
+        .party-details {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #2c2c2c;
+        }
+
+        .party-details .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .party-details .detail-icon {
+            color: #2c2c2c;
+            font-size: 12px;
+            width: 16px;
+            text-align: center;
+        }
+
+        /* Bank info */
+        .bank-info {
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 16px 24px;
+            margin-bottom: 36px;
+            display: flex;
+            gap: 40px;
+            font-size: 13px;
+            color: #2c2c2c;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            cursor: default;
+        }
+
+        .bank-info:hover {
+            background: #fdf8e8;
+            border: 1px solid #fde9a0;
+        }
+
+        .bank-info .bank-item {
+            display: flex;
+            gap: 8px;
+        }
+
+        .bank-info .bank-label {
+            font-weight: 600;
+            color: #2c2c2c;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bank-info .bank-value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* Table */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .items-table thead th {
+            background: transparent;
+            color: #2c2c2c;
+            padding: 14px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: left;
+            border-bottom: 2px solid #9d9fa2;
+            border-top: 2px solid #9d9fa2;
+        }
+
+        .items-table thead th:first-child {
+            width: 50px;
+            text-align: center;
+        }
+
+        .items-table thead th:last-child {
+            text-align: right;
+        }
+
+        .items-table thead th:nth-child(3),
+        .items-table thead th:nth-child(4) {
+            text-align: center;
+            width: 100px;
+        }
+
+        .items-table tbody td {
+            padding: 14px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #2c2c2c;
+        }
+
+        .items-table tbody td:first-child {
+            text-align: center;
+            font-weight: 600;
+            color: #2c2c2c;
+        }
+
+        .items-table tbody td:nth-child(3),
+        .items-table tbody td:nth-child(4) {
+            text-align: center;
+        }
+
+        .items-table tbody td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .items-table tbody tr:hover {
+            background: #fefbf0;
+        }
+
+        .items-table tbody tr.empty-row td {
+            height: 48px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* Totals */
+        .totals-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 36px;
+        }
+
+        .totals-box {
+            width: 280px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 14px;
+            color: #2c2c2c;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .total-row.grand-total {
+            border-bottom: none;
+            border-top: 2px solid #fdce36;
+            padding-top: 14px;
+            margin-top: 4px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c2c2c;
+        }
+
+        .total-row.grand-total .total-value {
+            color: #d4a800;
+        }
+
+        /* Notes */
+        .notes-section {
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 30px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            cursor: default;
+        }
+
+        .notes-section:hover {
+            background: #fdf8e8;
+            border: 1px solid #fde9a0;
+        }
+
+        .notes-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #2c2c2c;
+            margin-bottom: 10px;
+        }
+
+        .notes-content {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #2c2c2c;
+        }
+
+        .notes-content li {
+            list-style: none;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .notes-content li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background: #fdce36;
+            border-radius: 50%;
+        }
+
+        /* Manager */
+        .manager-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .manager-block .manager-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #2c2c2c;
+            margin-bottom: 8px;
+        }
+
+        .signature-line {
+            width: 200px;
+            border-bottom: 1px solid #ccc;
+            height: 40px;
+        }
+
+        /* Footer */
+        .invoice-footer {
+            background: #fff;
+            border-top: 2px solid #9d9fa2;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: #2c2c2c;
+        }
+
+        .footer-dot {
+            width: 4px;
+            height: 4px;
+            background: #fdce36;
+            border-radius: 50%;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .invoice-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <!-- Header -->
+        <div class="invoice-header">
+            <div class="logo-area">
+                <svg viewBox="0 0 1080 166.6" xmlns="http://www.w3.org/2000/svg">
+                    <defs><style>.st0{fill:#9d9fa2}.st1{fill:#fdce36}</style></defs>
+                    <path class="st0" d="M1070.1,77.1c-3.2-3.2-6.9-5.7-10.9-7.3-4-1.7-8.3-2.5-12.8-2.5-9,0-17.5,3.4-23.8,9.8-6.4,6.4-9.8,14.8-9.8,23.8v65.8h17.2v-65.8c0-4.4,1.7-8.5,4.8-11.7,3-3,7.2-4.8,11.7-4.8s8.5,1.7,11.7,4.8c3,3,4.8,7.3,4.8,11.7v65.8h17.2v-65.8c0-9-3.4-17.5-9.8-23.8"/>
+                    <path class="st0" d="M734.8,69.7c-4-1.7-8.3-2.5-12.8-2.5-9,0-17.5,3.4-23.8,9.8-.4.4-.8.9-1.2,1.3-.4-.4-.8-.9-1.2-1.3-3.2-3.2-6.9-5.7-10.9-7.3-4-1.7-8.3-2.5-12.8-2.5-9,0-17.5,3.4-23.8,9.8-6.4,6.4-9.8,14.8-9.8,23.8v65.8h17.2v-65.8c0-4.4,1.7-8.5,4.8-11.7,3-3,7.2-4.8,11.7-4.8s8.5,1.7,11.7,4.8c3,3,4.8,7.2,4.8,11.5h0v48.6h17.2v-48.6c0-4.4,1.7-8.5,4.8-11.7,3-3,7.2-4.8,11.7-4.8s8.5,1.7,11.7,4.8c3,3,4.8,7.3,4.8,11.7v65.8h17.2v-65.8c0-9-3.4-17.5-9.8-23.8-3.2-3.2-6.9-5.7-10.9-7.3"/>
+                    <path class="st0" d="M364.1,69.7c-4-1.7-8.3-2.5-12.8-2.5-9,0-17.5,3.4-23.8,9.8-.4.4-.8.9-1.2,1.3-.4-.4-.8-.9-1.2-1.3-3.2-3.2-6.9-5.7-10.9-7.3-4-1.7-8.3-2.5-12.8-2.5-9,0-17.5,3.4-23.8,9.8-6.4,6.4-9.8,14.8-9.8,23.8v32.2c0,9,3.4,17.5,9.8,23.8,6.4,6.4,14.8,9.8,23.8,9.8s8.9-.9,12.8-2.5c4-1.7,7.7-4.1,10.9-7.3,6.4-6.4,9.8-14.8,9.8-23.8v-32.2c0-4.4,1.7-8.5,4.8-11.7,3-3,7.2-4.8,11.7-4.8s8.5,1.7,11.7,4.8c3,3,4.8,7.3,4.8,11.7v65.8h17.2v-65.8c0-9-3.4-17.5-9.8-23.8-3.2-3.2-6.9-5.7-10.9-7.3M312.8,144.6c-3,3-7.2,4.8-11.7,4.8s-8.5-1.7-11.7-4.8c-3-3-4.8-7.2-4.8-11.7v-32.2c0-4.4,1.7-8.5,4.8-11.7,3-3,7.2-4.8,11.7-4.8s8.5,1.7,11.7,4.8c3,3,4.8,7.2,4.8,11.5h0v32.2c0,4.4-1.7,8.5-4.8,11.7"/>
+                    <path class="st0" d="M431.4,67.1c-9,0-17.5,3.4-23.8,9.8-6.4,6.4-9.8,14.7-9.8,23.6v.4h17.2v-.4c0-4.4,1.7-8.3,4.8-11.4,3-3,7.3-4.8,11.7-4.8,9,0,16.4,7.4,16.4,16.4v24.6c-.4,13.4-11.3,24-24.6,24s-9.4-1.3-13.4-4l-11.5,13c7.2,5.3,16,8.2,24.9,8.2,23,0,41.8-18.8,41.8-41.8v-23.8c0-9-3.4-17.3-9.8-23.8-6.4-6.4-14.8-9.9-23.8-9.9"/>
+                    <path class="st0" d="M898.9,69.7c-4-1.7-8.3-2.5-12.8-2.5-9,0-17.5,3.4-23.8,9.8-.4.4-.8.9-1.2,1.3-.4-.4-.8-.9-1.2-1.3-3.2-3.2-6.9-5.7-10.9-7.3-4.1-1.7-8.3-2.5-12.8-2.5h0v17.2c4.4,0,8.5,1.7,11.7,4.8,3,3,4.8,7.2,4.8,11.5h17.2c0-4.5,1.7-8.6,4.8-11.8,3-3,7.2-4.8,11.7-4.8s8.5,1.7,11.7,4.8c3,3,4.8,7.3,4.8,11.7v24.6c-.4,13.4-11.3,24-24.6,24s-9.4-1.3-13.4-4l-11.5,13c7.2,5.3,16,8.2,24.9,8.2,23,0,41.8-18.8,41.8-41.8v-24c0-9-3.4-17.5-9.8-23.8-3.2-3.2-6.9-5.7-10.9-7.3"/>
+                    <path class="st0" d="M583.4,67.1c-8.9,0-17.7,2.9-24.9,8.2l11.5,13c4-2.5,8.6-4,13.4-4,11.8,0,21.5,8.1,24,19.1-4.8-2.5-10.2-4-15.8-4-9,0-17.5,3.6-23.8,9.9s-9.8,14.8-9.8,23.7h0c0,8.9,3.6,17.2,9.8,23.6,6.4,6.4,14.8,9.8,23.8,9.8s17.5-3.6,23.8-9.9c6.4-6.4,9.8-14.8,9.8-23.7h0v-24c0-23-18.8-41.8-41.8-41.8M608.1,132.9c0,9-7.4,16.4-16.4,16.4s-8.5-1.7-11.7-4.8c-3-3-4.8-7-4.8-11.4h0c0-9,7.4-16.4,16.4-16.4s8.5,1.7,11.7,4.8c3,3,4.8,7,4.8,11.4h0Z"/>
+                    <path class="st0" d="M957.8,67.1c-8.9,0-17.7,2.9-24.9,8.2l11.5,13c4-2.5,8.6-4,13.4-4,11.8,0,21.5,8.1,24,19.1-4.8-2.5-10.2-4-15.8-4-9,0-17.5,3.6-23.8,9.9-6.4,6.4-9.8,14.8-9.8,23.7h0c0,8.9,3.6,17.2,9.8,23.6,6.4,6.4,14.8,9.8,23.8,9.8s17.5-3.6,23.8-9.9c6.4-6.4,9.8-14.8,9.8-23.7h0v-24c0-23-18.8-41.8-41.8-41.8M982.5,132.9c0,9-7.4,16.4-16.4,16.4s-8.5-1.7-11.7-4.8c-3-3-4.8-7-4.8-11.4h0c0-9,7.4-16.4,16.4-16.4s8.5,1.7,11.7,4.8c3,3,4.8,7,4.8,11.4h0Z"/>
+                    <path class="st0" d="M511.5,99.4c-5.6,0-11,1.3-15.8,4,2.5-11,12.3-19.1,24-19.1h8.3v-17.2h-8.3c-23,0-41.8,18.8-41.8,41.8v23.8h0v33.6h17.2v-33.6h0c0-4.4,1.7-8.3,4.8-11.4,3-3,7.3-4.8,11.7-4.8,9,0,16.4,7.4,16.4,16.4v33.4h17.2v-33.4c0-9-3.4-17.3-9.8-23.8-6.4-6.4-14.8-9.9-23.8-9.9"/>
+                    <path class="st0" d="M802.1,99.4c-5.6,0-11,1.3-15.8,4,2.5-11,12.3-19.1,24-19.1h8.3v-17.2h-8.3c-23,0-41.8,18.8-41.8,41.8v57.6h17.2v-33.6h0c0-4.4,1.7-8.3,4.8-11.4s7.3-4.8,11.7-4.8c9,0,16.4,7.4,16.4,16.4v33.4h17.2v-33.4c0-9-3.4-17.3-9.8-23.8-6.4-6.4-14.8-9.9-23.8-9.9"/>
+                    <path class="st1" d="M166.7,89.8v76.8h-47.7c-15,0-28.5-9.8-32.4-24.1C76,104.6,41.3,76.8,0,76.8V0h47.7c15,0,28.3,9.8,32.4,24.1,4.2,15.1,12.3,28.6,23,39.3,16.3,16.3,38.8,26.4,63.6,26.4"/>
+                    <path class="st0" d="M234,0v67.1h0C196.9,67.1,166.8,37.1,166.8,0h67.1Z"/>
+                </svg>
+            </div>
+            <div class="invoice-title-area">
+                <div class="invoice-title">ინვოისი</div>
+                <div class="invoice-number">#01012019</div>
+            </div>
+        </div>
+        <div class="accent-bar"></div>
+
+        <!-- Body -->
+        <div class="invoice-body">
+            <!-- Date -->
+            <div class="date-row">
+                <div class="date-badge">
+                    თარიღი: <strong>01 / 01 / 2019</strong>
+                </div>
+            </div>
+
+            <!-- Parties -->
+            <div class="parties">
+                <div class="party party-seller">
+                    <div class="party-label">გამყიდველი</div>
+                    <div class="party-name">შპს თერმორუმი</div>
+                    <div class="party-details">
+                        <div class="detail-row">ს/ნ: 405134448</div>
+                        <div class="detail-row">+995 322 19 55 50</div>
+                        <div class="detail-row">info@trm.ge</div>
+                    </div>
+                </div>
+                <div class="party party-buyer">
+                    <div class="party-label">მყიდველი</div>
+                    <div class="party-name">შპს ინსტალი</div>
+                    <div class="party-details">
+                        <div class="detail-row">ს/ნ:</div>
+                        <div class="detail-row">+995 597 41 55 44</div>
+                        <div class="detail-row">gelazonia76@mail.ru</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bank Info -->
+            <div class="bank-info">
+                <div class="bank-item">
+                    <div>
+                        <div class="bank-label">ბანკი</div>
+                        <div class="bank-value">საქართველოს ბანკი</div>
+                    </div>
+                </div>
+                <div class="bank-item">
+                    <div>
+                        <div class="bank-label">ანგარიში</div>
+                        <div class="bank-value">GE96BG0000000641294600</div>
+                    </div>
+                </div>
+                <div class="bank-item">
+                    <div>
+                        <div class="bank-label">SWIFT</div>
+                        <div class="bank-value">BAGAGE22</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>სახელწოდება</th>
+                        <th>რაოდ</th>
+                        <th>ფასი (₾)</th>
+                        <th>სულ (₾)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="empty-row"><td>1</td><td></td><td></td><td></td><td></td></tr>
+                    <tr class="empty-row"><td>2</td><td></td><td></td><td></td><td></td></tr>
+                    <tr class="empty-row"><td>3</td><td></td><td></td><td></td><td></td></tr>
+                    <tr class="empty-row"><td>4</td><td></td><td></td><td></td><td></td></tr>
+                    <tr class="empty-row"><td>5</td><td></td><td></td><td></td><td></td></tr>
+                    <tr class="empty-row"><td>6</td><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
+
+            <!-- Totals -->
+            <div class="totals-section">
+                <div class="totals-box">
+                    <div class="total-row">
+                        <span>ქვეჯამი:</span>
+                        <span></span>
+                    </div>
+                    <div class="total-row">
+                        <span>დღგ (18%):</span>
+                        <span></span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>სულ:</span>
+                        <span class="total-value"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="notes-section">
+                <div class="notes-label">შენიშვნები</div>
+                <div class="notes-content">
+                    <li>ფასი შეიცავს დღგ-ს</li>
+                    <li>ინვოისის მოქმედების ვადაა 5 დღე</li>
+                </div>
+            </div>
+
+            <!-- Manager -->
+            <div class="manager-section">
+                <div class="manager-block">
+                    <div class="manager-label">მენეჯერი</div>
+                    <div class="signature-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="invoice-footer">
+            <span>შპს თერმორუმი</span>
+            <div class="footer-dot"></div>
+            <span>43 ბელიაშვილის ქ., თბილისი 0159, საქართველო</span>
+        </div>
+    </div>
+</body>
+</html>
