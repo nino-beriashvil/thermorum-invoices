@@ -552,13 +552,14 @@
             <!-- Payment Buttons -->
             <style>
                 .payment-buttons{display:flex;gap:12px;margin-bottom:14px}
-                .pay-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 20px;border-radius:8px;border:none;color:#fff;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .15s ease,box-shadow .2s ease,filter .2s ease}
+                .pay-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:14px;padding:16px 22px;border-radius:8px;border:none;color:#fff;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .15s ease,box-shadow .2s ease,filter .2s ease}
                 .pay-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.4);filter:brightness(1.08)}
                 .pay-btn:active{transform:translateY(0)}
                 .pay-btn-bog{background:linear-gradient(135deg,#ff8a3d 0%,#e85d00 100%)}
                 .pay-btn-tbc{background:linear-gradient(135deg,#2bb7db 0%,#0086b3 100%)}
-                .pay-btn-icon{width:34px;height:34px;border-radius:7px;display:block;flex-shrink:0;object-fit:contain;background:#fff}
+                .pay-btn-icon{width:40px;height:40px;border-radius:8px;display:block;flex-shrink:0;object-fit:contain;background:#fff}
                 @media print{.payment-buttons{display:none}}
+                @media (max-width:640px){body{padding:8px}.invoice-header{padding:14px 16px !important;flex-direction:column;align-items:flex-start;gap:10px}.invoice-title-area{text-align:left;width:100%}.invoice-title{font-size:22px !important;letter-spacing:1px !important}.invoice-body{padding:14px 16px !important}.date-row{justify-content:flex-start}.parties{flex-direction:column !important;gap:10px !important}.bank-info,.bank-section{flex-direction:column !important;gap:10px !important;padding:12px 14px !important}.bank-item{border-right:none !important;padding:8px 0 !important}.payment-buttons{flex-direction:column}.pay-btn{font-size:15px !important;padding:14px 18px !important}.items-table thead th,.items-table tbody td{padding:10px 6px !important;font-size:11px !important}.items-table thead th:nth-child(3),.items-table thead th:nth-child(4),.items-table tbody td:nth-child(3),.items-table tbody td:nth-child(4){width:auto}.totals-box{width:100% !important}.totals-section{justify-content:stretch}.manager-section{flex-direction:column !important;gap:12px !important;align-items:stretch !important}.signature-line{width:100% !important}.invoice-footer{flex-wrap:wrap;gap:8px !important;padding:12px 16px !important;font-size:11px !important;text-align:center}.logo-area svg{height:34px !important}}
             </style>
             <div class="payment-buttons">
                 <button type="button" class="pay-btn pay-btn-bog">
