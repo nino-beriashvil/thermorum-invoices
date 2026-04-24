@@ -516,6 +516,28 @@
                 </div>
             </div>
 
+            <!-- Payment Buttons -->
+            <style>
+                .payment-buttons{display:flex;gap:12px;margin-bottom:14px}
+                .pay-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 20px;border-radius:8px;border:none;color:#fff;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .15s ease,box-shadow .2s ease,filter .2s ease}
+                .pay-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.15);filter:brightness(1.05)}
+                .pay-btn:active{transform:translateY(0)}
+                .pay-btn-bog{background:linear-gradient(135deg,#ff8a3d 0%,#e85d00 100%)}
+                .pay-btn-tbc{background:linear-gradient(135deg,#2bb7db 0%,#0086b3 100%)}
+                .pay-btn-icon{width:34px;height:34px;border-radius:7px;display:block;flex-shrink:0;object-fit:contain;background:#fff}
+                @media print{.payment-buttons{display:none}}
+            </style>
+            <div class="payment-buttons">
+                <button type="button" class="pay-btn pay-btn-bog">
+                    <img src="bog-logo.png" class="pay-btn-icon" alt="BOG">
+                    <span>გადარიცხვა საქ ბანკი</span>
+                </button>
+                <button type="button" class="pay-btn pay-btn-tbc">
+                    <img src="tbc-logo.png" class="pay-btn-icon" alt="TBC">
+                    <span>გადარიცხვა თიბისი ბანკი</span>
+                </button>
+            </div>
+
             <!-- Notes -->
             <div class="notes-section">
                 <div class="notes-label">შენიშვნები</div>
